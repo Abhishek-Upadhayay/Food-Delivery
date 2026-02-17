@@ -17,9 +17,8 @@ services:
     ports:
       - "4000:4000"
     environment:
-      # Agar code mein MONGO_URI hai toh yahan MONGO_URI likho
-      - MONGO_URL=mongodb://db:27017/food-del
-      - JWT_SECRET=mySecretKey # Agar koi aur secret hai toh wo bhi yahan daal do
+      # Aapke code mein process.env.MONGO_URL hai, isliye yahan EXACT yehi hona chahiye
+      - MONGO_URL=mongodb://mongodb:27017/food-del
     depends_on:
       - db
 
@@ -30,7 +29,7 @@ services:
     ports:
       - "5173:5173"
     environment:
-      # Yahan <YOUR_PUBLIC_IP> ki jagah apne EC2 ka Public IP daalna mat bhulna
+      # Yahan apna EC2 ka Public IP zaroor daalna
       - VITE_API_URL=http://100.53.65.52:4000
     depends_on:
       - backend
