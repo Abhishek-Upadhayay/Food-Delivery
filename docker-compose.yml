@@ -18,7 +18,7 @@ services:
       - "4000:4000"
     environment:
       # Agar code mein MONGO_URI hai toh yahan MONGO_URI likho
-      - MONGO_URI=mongodb://db:27017/food-del
+      - MONGO_URL=mongodb://db:27017/food-del
       - JWT_SECRET=mySecretKey # Agar koi aur secret hai toh wo bhi yahan daal do
     depends_on:
       - db
