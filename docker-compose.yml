@@ -1,14 +1,15 @@
 services:
   db:
-    image: :mongo:latest
+    image: mongo:latest
     container_name: mongodb
     ports:
       - "27017:27017"
     volumes:
-        - mongo_data:/data/db
-  
+      - mongo_data:/data/db
+
   backend:
-    build: ./backend
+    # Build ki jagah image use karna better hai agar Jenkins image push kar raha hai
+    image: abhiraj426/food-backend:latest 
     container_name: food-backend
     ports:
       - "4000:4000"
@@ -16,15 +17,18 @@ services:
       - MONGODB_URI=mongodb://db:27017/food-del
     depends_on:
       - db
-  
-  Frontend:
-    build: ./Frontend
-    container_name: food-Frontend
+
+  frontend:
+    image: abhiraj426/food-frontend:latest
+    container_name: food-frontend
     ports:
       - "5173:5173"
     depends_on:
       - backend
+    # Agar .env file server par nahi hai, toh ise hata dena ya verify karna
     env_file:
-    - ./frontend/.env
+      - ./frontend/.env 
 
-
+# YEH SECTION BAHUT ZARURI HAI
+volumes:
+  mongo_data:
