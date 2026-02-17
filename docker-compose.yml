@@ -8,13 +8,13 @@ services:
       - mongo_data:/data/db
 
   backend:
-    # Build ki jagah image use karna better hai agar Jenkins image push kar raha hai
-    image: abhiraj426/food-backend:latest 
+    image: abhiraj426/food-backend:latest
     container_name: food-backend
     ports:
       - "4000:4000"
     environment: 
       - MONGODB_URI=mongodb://db:27017/food-del
+      # Yahan backend ke aur variables daal sakte ho agar hain toh
     depends_on:
       - db
 
@@ -23,12 +23,11 @@ services:
     container_name: food-frontend
     ports:
       - "5173:5173"
+    environment:
+      # Jo variables aapke .env mein the, unhe yahan aise likho:
+      - VITE_API_URL=http://<YOUR_PUBLIC_IP>:4000 
     depends_on:
       - backend
-    # Agar .env file server par nahi hai, toh ise hata dena ya verify karna
-    env_file:
-      - ./frontend/.env 
 
-# YEH SECTION BAHUT ZARURI HAI
 volumes:
   mongo_data:
