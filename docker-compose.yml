@@ -1,0 +1,30 @@
+services:
+  db:
+    image: :mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+        - mongo_data:/data/db
+  
+  backend:
+    build: ./backend
+    container_name: food-backend
+    ports:
+      - "4000:4000"
+    environment: 
+      - MONGODB_URI=mongodb://db:27017/food-del
+    depends_on:
+      - db
+  
+  Frontend:
+    build: ./Frontend
+    container_name: food-Frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    env_file:
+    - ./frontend/.env
+
+
